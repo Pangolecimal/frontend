@@ -53,7 +53,8 @@
 
 	header {
 		position: sticky;
-		top: 0rem;
+		top: 0;
+		left: 0;
 		padding-bottom: 1rem;
 	}
 

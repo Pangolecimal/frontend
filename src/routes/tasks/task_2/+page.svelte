@@ -19,8 +19,8 @@
 		<section>
 			<h4>Sub 3</h4>
 			<p>
-				Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta ex quaerat aliquid tempora provident dolorem
-				illo aliquam, veniam fuga rem?
+				Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta ex quaerat aliquid tempora provident
+				dolorem illo aliquam, veniam fuga rem?
 			</p>
 		</section>
 	</main>
@@ -44,10 +44,10 @@
 
 		<aside>
 			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam eius quia quae earum. Enim quam nesciunt
-				reiciendis non quia sit veniam adipisci dolorem saepe rerum, ex iusto nobis? Similique, odio? Ipsa ab
-				dignissimos, veniam, aperiam facere asperiores dolorum provident quod accusamus delectus quae deleniti debitis
-				quas reprehenderit, magni consectetur voluptas!
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam eius quia quae earum. Enim quam
+				nesciunt reiciendis non quia sit veniam adipisci dolorem saepe rerum, ex iusto nobis? Similique, odio?
+				Ipsa ab dignissimos, veniam, aperiam facere asperiores dolorum provident quod accusamus delectus quae
+				deleniti debitis quas reprehenderit, magni consectetur voluptas!
 			</p>
 		</aside>
 	</div>
@@ -121,7 +121,7 @@
 		justify-content: center;
 		padding: 1rem;
 		background-color: var(--ctp-mocha-peach);
-		color: var(--ctp-mocha-text);
+		color: var(--ctp-mocha-surface0);
 		text-shadow: 0.25rem 0.25rem 0 1rem black;
 		border-radius: 0.5rem 0.5rem 0 0;
 	}

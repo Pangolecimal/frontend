@@ -1,19 +1,33 @@
+<script>
+	let numbers = ['Ichi', 'Ni', 'San', 'Shi', 'Go', 'Roku', 'Nana', 'Hachi'];
+</script>
+
 <h1>Tasks</h1>
 
-<ol class="tasks">
-	<li>Task <a href="/tasks/task_1">Uno</a></li>
-	<li>Task <a href="/tasks/task_2">Dos</a></li>
-</ol>
+<ul class="tasks">
+	{#each numbers as num, i}
+		<li><b>{i + 1} </b><a href="/tasks/task_{i + 1}">{num}</a></li>
+	{/each}
+</ul>
 
 <style>
-	ol {
+	ul {
 		background-color: var(--ctp-mocha-mantle);
-		/* display: flex; */
+		padding: 1rem;
+		/* padding-left: 3rem; */
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		border-radius: 2rem;
 	}
 
-	a:visited {
-		color: var(--ctp-mocha-mauve);
+	li {
+		border-radius: 1rem;
+		padding: 0.5rem;
+		background-color: var(--ctp-mocha-base);
+		list-style-type: none;
 	}
+
 	a {
 		color: var(--ctp-mocha-blue);
 	}
