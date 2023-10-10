@@ -1,15 +1,17 @@
 <h1>Home</h1>
 
-<h2>There is nothing here</h2>
+<main>
+	<img src="/src/lib/napoleon.png" alt="the is nothing we can do" usemap="#workmap_2" width="800px" />
+	<h2><i>There is nothing we can do.</i></h2>
+</main>
 
-<p>except for some <b><i>lorem</i></b></p>
-
-<p>
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero odio at, facilis possimus temporibus sed nisi omnis,
-	minima doloremque tempore placeat dolores, laborum dolorum iusto deleniti magni fuga amet! Repudiandae repellendus hic
-	explicabo nesciunt deleniti repellat, maxime cumque veritatis quaerat fugit? Perspiciatis, at nobis. Eligendi fugit
-	pariatur dolor earum recusandae sapiente. Corrupti reprehenderit, sequi iusto ea nostrum reiciendis vitae eveniet
-	architecto alias. Aliquam cupiditate dolore laboriosam quibusdam. Minus ipsam expedita similique deserunt quae facilis
-	sequi et qui praesentium quam! Aliquam veniam eius, nesciunt sunt esse sapiente possimus ab deserunt aperiam vel sed,
-	quas pariatur cumque. Nam quia nulla quis eveniet?
-</p>
+<style>
+	main {
+		display: grid;
+		place-items: center;
+		gap: 1rem;
+	}
+	img {
+		max-width: 800px;
+	}
+</style>
