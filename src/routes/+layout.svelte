@@ -4,12 +4,12 @@
 	function send_help(e) {
 		let got = e.target.closest('svg').id ?? '';
 		if (got === 'open') {
-			document.getElementById('open').style.display = 'none';
-			document.getElementById('close').style.display = 'grid';
+			document.getElementById('open').dataset.active = false;
+			document.getElementById('close').dataset.active = true;
 			open_flood_gates();
 		} else if (got === 'close') {
-			document.getElementById('open').style.display = 'grid';
-			document.getElementById('close').style.display = 'none';
+			document.getElementById('open').dataset.active = true;
+			document.getElementById('close').dataset.active = false;
 			close_flood_gates();
 		}
 	}
@@ -45,12 +45,12 @@
 
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div id="burger" on:click={send_help}>
-			<svg id="open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+			<svg id="open" data-active="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
 				><path
 					d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
 				/></svg
 			>
-			<svg id="close" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"
+			<svg id="close" data-active="false" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"
 				><path
 					d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
 				/></svg
@@ -131,8 +131,43 @@
 		transition: rotate 500ms;
 	}
 
-	#burger > #close {
-		display: none;
+	:is(#open, #close) {
+		position: absolute;
+		display: grid;
+		transition: 500ms;
+	}
+
+	:global(#open[data-active='true']) {
+		visibility: visible;
+		opacity: 100%;
+		z-index: 10;
+
+		rotate: 0;
+		scale: 1;
+	}
+	:global(#open[data-active='false']) {
+		visibility: hidden;
+		opacity: 0;
+		z-index: 5;
+
+		rotate: 180deg;
+		scale: 0;
+	}
+	:global(#close[data-active='true']) {
+		visibility: visible;
+		opacity: 100%;
+		z-index: 10;
+
+		rotate: 0;
+		scale: 1;
+	}
+	:global(#close[data-active='false']) {
+		visibility: hidden;
+		opacity: 0;
+		z-index: 5;
+
+		rotate: -180deg;
+		scale: 0;
 	}
 
 	#modal {
@@ -141,11 +176,11 @@
 		top: 100%;
 		width: 10rem;
 		height: 12rem;
+		transition: 500ms;
 	}
 	:global(#modal[data-active='false']) {
 		visibility: hidden;
 		opacity: 0;
-		transition: 500ms;
 	}
 	:global(#modal[data-active='true']) {
 		visibility: visible;
@@ -175,6 +210,8 @@
 	@media (min-width: 1000px) {
 		#burger {
 			display: none;
+			visibility: hidden;
+			opacity: 0;
 		}
 
 		a.secondary {
