@@ -1,4 +1,33 @@
 :root {
+	/* LATTE */
+	--ctp-latte-yellow: #df8e1d;
+	--ctp-latte-teal: #179299;
+	--ctp-latte-sky: #04a5e5;
+	--ctp-latte-sapphire: #209fb5;
+	--ctp-latte-rosewater: #dc8a78;
+	--ctp-latte-red: #d20f39;
+	--ctp-latte-pink: #ea76cb;
+	--ctp-latte-peach: #fe640b;
+	--ctp-latte-mauve: #8839ef;
+	--ctp-latte-maroon: #e64553;
+	--ctp-latte-lavender: #7287fd;
+	--ctp-latte-green: #40a02b;
+	--ctp-latte-flamingo: #dd7878;
+	--ctp-latte-blue: #1e66f5;
+	--ctp-latte-text: #4c4f69;
+	--ctp-latte-subtext1: #5c5f77;
+	--ctp-latte-subtext0: #6c6f85;
+	--ctp-latte-overlay2: #7c7f93;
+	--ctp-latte-overlay1: #8c8fa1;
+	--ctp-latte-overlay0: #9ca0b0;
+	--ctp-latte-surface2: #acb0be;
+	--ctp-latte-surface1: #bcc0cc;
+	--ctp-latte-surface0: #ccd0da;
+	--ctp-latte-base: #eff1f5;
+	--ctp-latte-mantle: #e6e9ef;
+	--ctp-latte-crust: #dce0e8;
+
+	/* FRAPPE */
 	--ctp-frappe-base: #303446;
 	--ctp-frappe-blue: #8caaee;
 	--ctp-frappe-crust: #232634;
@@ -25,35 +54,8 @@
 	--ctp-frappe-teal: #81c8be;
 	--ctp-frappe-text: #c6d0f5;
 	--ctp-frappe-yellow: #e5c890;
-	--ctp-latte-base: #eff1f5;
-	--ctp-latte-blue: #1e66f5;
-	--ctp-latte-crust: #dce0e8;
-	--ctp-latte-flamingo: #dd7878;
-	--ctp-latte-green: #40a02b;
-	--ctp-latte-lavender: #7287fd;
-	--ctp-latte-mantle: #e6e9ef;
-	--ctp-latte-maroon: #e64553;
-	--ctp-latte-mauve: #8839ef;
-	--ctp-latte-overlay0: #9ca0b0;
-	--ctp-latte-overlay1: #8c8fa1;
-	--ctp-latte-overlay2: #7c7f93;
-	--ctp-latte-peach: #fe640b;
-	--ctp-latte-pink: #ea76cb;
-	--ctp-latte-red: #d20f39;
-	--ctp-latte-rosewater: #dc8a78;
-	--ctp-latte-sapphire: #209fb5;
-	--ctp-latte-sky: #04a5e5;
-	--ctp-latte-subtext0: #6c6f85;
-	--ctp-latte-subtext1: #5c5f77;
-	--ctp-latte-surface0: #ccd0da;
-	--ctp-latte-surface1: #bcc0cc;
-	--ctp-latte-surface2: #acb0be;
-	--ctp-latte-teal: #179299;
-	--ctp-latte-text: #4c4f69;
-	--ctp-latte-yellow: #df8e1d;
 
 	/* MACCHIATO */
-
 	--ctp-macchiato-base: #24273a;
 	--ctp-macchiato-blue: #8aadf4;
 	--ctp-macchiato-crust: #181926;
@@ -82,7 +84,6 @@
 	--ctp-macchiato-yellow: #eed49f;
 
 	/* MOCHA */
-
 	--ctp-mocha-red: #f38ba8;
 	--ctp-mocha-blue: #89b4fa;
 	--ctp-mocha-flamingo: #f2cdcd;
