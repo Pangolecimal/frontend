@@ -80,6 +80,7 @@
 		top: 0;
 		left: 0;
 		padding-bottom: 1rem;
+		z-index: 1000;
 	}
 
 	nav {
