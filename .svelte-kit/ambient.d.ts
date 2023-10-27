@@ -133,7 +133,6 @@ declare module '$env/static/private' {
 	export const _ZPLUG_CONFIG_SUBSHELL: string;
 	export const KDEDIRS: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
-	export const NIXOS_XDG_OPEN_USE_PORTAL: string;
 	export const QT_AUTO_SCREEN_SCALE_FACTOR: string;
 	export const JOURNAL_STREAM: string;
 	export const XCURSOR_THEME: string;
@@ -289,7 +288,6 @@ declare module '$env/dynamic/private' {
 		_ZPLUG_CONFIG_SUBSHELL: string;
 		KDEDIRS: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
-		NIXOS_XDG_OPEN_USE_PORTAL: string;
 		QT_AUTO_SCREEN_SCALE_FACTOR: string;
 		JOURNAL_STREAM: string;
 		XCURSOR_THEME: string;
