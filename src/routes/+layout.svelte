@@ -75,6 +75,21 @@
 		margin: 0;
 	}
 
+	:global(a) {
+		text-decoration: none;
+		color: var(--ctp-mocha-peach);
+		font-weight: bold;
+
+		&:hover {
+			text-decoration: underline;
+			color: var(--ctp-mocha-pink);
+		}
+		&:active {
+			text-decoration: underline;
+			color: var(--ctp-mocha-mauve);
+		}
+	}
+
 	header {
 		position: sticky;
 		top: 0;
