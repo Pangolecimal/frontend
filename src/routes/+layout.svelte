@@ -1,27 +1,35 @@
 <script>
-	// @ts-nocheck
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
-	function send_help(e) {
-		let got = e.target.closest('svg').id ?? '';
-		if (got === 'open') {
-			document.getElementById('open').dataset.active = false;
-			document.getElementById('close').dataset.active = true;
-			open_flood_gates();
-		} else if (got === 'close') {
-			document.getElementById('open').dataset.active = true;
-			document.getElementById('close').dataset.active = false;
-			close_flood_gates();
+	// @ts-ignore
+	let send_help = function (e) {};
+
+	onMount(() => {
+		send_help = function (e) {
+			let got = e.target.closest('svg').id ?? '';
+			if (got === 'open') {
+				// @ts-ignore
+				document.getElementById('open').dataset.active = false; // @ts-ignore
+				document.getElementById('close').dataset.active = true;
+				open_flood_gates();
+			} else if (got === 'close') {
+				// @ts-ignore
+				document.getElementById('open').dataset.active = true; // @ts-ignore
+				document.getElementById('close').dataset.active = false;
+				close_flood_gates();
+			}
+		};
+
+		function open_flood_gates() {
+			console.log('open_flood_gates'); // @ts-ignore
+			document.getElementById('modal').dataset.active = true;
 		}
-	}
-
-	function open_flood_gates() {
-		console.log('open_flood_gates');
-		document.getElementById('modal').dataset.active = true;
-	}
-	function close_flood_gates() {
-		console.log('close_flood_gates');
-		document.getElementById('modal').dataset.active = false;
-	}
+		function close_flood_gates() {
+			console.log('close_flood_gates'); // @ts-ignore
+			document.getElementById('modal').dataset.active = false;
+		}
+	});
 </script>
 
 <header>
@@ -33,6 +41,10 @@
 				/></svg
 			>
 		</a>
+		<div id="location">
+			<div>Location:</div>
+			<div>{$page.url.pathname}</div>
+		</div>
 		<div class="spacer" />
 
 		<a href="/tasks" class="secondary" id="tasks">Tasks</a>
@@ -63,15 +75,13 @@
 
 <style type="text/css">
 	:global(html, body) {
-		padding: 0 1rem;
-		box-sizing: border-box;
-
 		background-color: var(--ctp-mocha-base);
 		color: var(--ctp-mocha-text);
 		font-size: 1.25rem;
 	}
 
 	:global(*) {
+		box-sizing: border-box;
 		margin: 0;
 	}
 
@@ -94,8 +104,25 @@
 		position: sticky;
 		top: 0;
 		left: 0;
-		padding-bottom: 1rem;
+		padding: 0rem 0.5rem 1rem 0.5rem;
 		z-index: 1000;
+		width: 100vw;
+	}
+
+	div#location {
+		display: grid;
+		place-items: center;
+		grid-template-rows: 1fr 1fr;
+
+		width: fit-content;
+		font-size: 1.25rem;
+		font-weight: 900;
+		color: var(--ctp-mocha-blue);
+
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		translate: -50% -50%;
 	}
 
 	nav {
@@ -107,13 +134,13 @@
 		border-radius: 0 0 1rem 1rem;
 		justify-content: end;
 		font-size: 2rem;
-	}
 
-	nav a {
-		text-decoration: none;
-		font-weight: 900;
-		display: grid;
-		place-items: center;
+		& a {
+			text-decoration: none;
+			font-weight: 900;
+			display: grid;
+			place-items: center;
+		}
 	}
 
 	a {
@@ -127,9 +154,10 @@
 		fill: var(--ctp-mocha-blue);
 		height: 2.5rem;
 		width: 2.5rem;
-	}
-	svg:hover {
-		fill: var(--ctp-mocha-sky);
+
+		&:hover {
+			fill: var(--ctp-mocha-sky);
+		}
 	}
 
 	div.spacer {
