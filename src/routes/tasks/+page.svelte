@@ -10,6 +10,10 @@
 	{/each}
 	<li><b>9</b>: <a href="/tasks">Skipped</a></li>
 	<li><b>10</b>: <a href="/tasks/lights-out">Lights Out</a></li>
+	<li><b>11</b>: <a href="/tasks">Skipped</a></li>
+	<li><b>12</b>: <a href="/tasks/delaunay">Delaunay Triangulation</a></li>
+	<li><b>13</b>: <a href="/tasks">404</a></li>
+	<li><b>14</b>: <a href="/tasks">404</a></li>
 </ul>
 
 <style>

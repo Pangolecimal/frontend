@@ -16,7 +16,8 @@ export const nodes = [
 	() => import('./nodes/12'),
 	() => import('./nodes/13'),
 	() => import('./nodes/14'),
-	() => import('./nodes/15')
+	() => import('./nodes/15'),
+	() => import('./nodes/16')
 ];
 
 export const server_loads = [];
@@ -25,17 +26,18 @@ export const dictionary = {
 		"/": [2],
 		"/about": [3],
 		"/tasks": [4],
-		"/tasks/lights-out": [5],
-		"/tasks/task-1": [6],
-		"/tasks/task-1/circle": [7],
-		"/tasks/task-1/rect": [8],
-		"/tasks/task-2": [9],
-		"/tasks/task-3": [10],
-		"/tasks/task-4": [11],
-		"/tasks/task-5": [12],
-		"/tasks/task-6": [13],
-		"/tasks/task-7": [14],
-		"/tasks/task-8": [15]
+		"/tasks/delaunay": [5],
+		"/tasks/lights-out": [6],
+		"/tasks/task-1": [7],
+		"/tasks/task-1/circle": [8],
+		"/tasks/task-1/rect": [9],
+		"/tasks/task-2": [10],
+		"/tasks/task-3": [11],
+		"/tasks/task-4": [12],
+		"/tasks/task-5": [13],
+		"/tasks/task-6": [14],
+		"/tasks/task-7": [15],
+		"/tasks/task-8": [16]
 	};
 
 export const hooks = {

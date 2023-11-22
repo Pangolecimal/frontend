@@ -41,6 +41,7 @@ declare module '$env/static/private' {
 	export const FPATH: string;
 	export const NODE: string;
 	export const ZPLUG_CACHE_DIR: string;
+	export const WEZTERM_CONFIG_DIR: string;
 	export const LC_ADDRESS: string;
 	export const _ZPLUG_PREZTO: string;
 	export const LC_NAME: string;
@@ -48,6 +49,7 @@ declare module '$env/static/private' {
 	export const LOCALE_ARCHIVE_2_27: string;
 	export const npm_config_local_prefix: string;
 	export const _ZPLUG_AWKPATH: string;
+	export const WEZTERM_EXECUTABLE: string;
 	export const ZPLUG_THREADS: string;
 	export const ZPLUG_FILTER: string;
 	export const DESKTOP_SESSION: string;
@@ -70,6 +72,7 @@ declare module '$env/static/private' {
 	export const XAUTHORITY: string;
 	export const _ZPLUG_OHMYZSH: string;
 	export const VSCODE_GIT_ASKPASS_NODE: string;
+	export const VIM_MODE_KEYMAP: string;
 	export const PERIOD: string;
 	export const VSCODE_INJECTION: string;
 	export const GTK2_RC_FILES: string;
@@ -77,6 +80,7 @@ declare module '$env/static/private' {
 	export const SSH_ASKPASS: string;
 	export const LANG: string;
 	export const LC_PAPER: string;
+	export const WEZTERM_UNIX_SOCKET: string;
 	export const XDG_CURRENT_DESKTOP: string;
 	export const npm_package_version: string;
 	export const STARSHIP_SHELL: string;
@@ -91,6 +95,7 @@ declare module '$env/static/private' {
 	export const KDE_SESSION_UID: string;
 	export const NIX_USER_PROFILE_DIR: string;
 	export const INFOPATH: string;
+	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 	export const XDG_SESSION_CLASS: string;
 	export const TERM: string;
 	export const LC_IDENTIFICATION: string;
@@ -127,6 +132,7 @@ declare module '$env/static/private' {
 	export const TERMINFO_DIRS: string;
 	export const npm_execpath: string;
 	export const MOZ_PLUGIN_PATH: string;
+	export const WEZTERM_CONFIG_FILE: string;
 	export const XDG_RUNTIME_DIR: string;
 	export const npm_package_json: string;
 	export const LC_TIME: string;
@@ -150,8 +156,10 @@ declare module '$env/static/private' {
 	export const QT_PLUGIN_PATH: string;
 	export const npm_node_execpath: string;
 	export const LC_NUMERIC: string;
+	export const WEZTERM_PANE: string;
 	export const OLDPWD: string;
 	export const TERM_PROGRAM: string;
+	export const WEZTERM_EXECUTABLE_DIR: string;
 	export const NODE_ENV: string;
 }
 
@@ -197,6 +205,7 @@ declare module '$env/dynamic/private' {
 		FPATH: string;
 		NODE: string;
 		ZPLUG_CACHE_DIR: string;
+		WEZTERM_CONFIG_DIR: string;
 		LC_ADDRESS: string;
 		_ZPLUG_PREZTO: string;
 		LC_NAME: string;
@@ -204,6 +213,7 @@ declare module '$env/dynamic/private' {
 		LOCALE_ARCHIVE_2_27: string;
 		npm_config_local_prefix: string;
 		_ZPLUG_AWKPATH: string;
+		WEZTERM_EXECUTABLE: string;
 		ZPLUG_THREADS: string;
 		ZPLUG_FILTER: string;
 		DESKTOP_SESSION: string;
@@ -226,6 +236,7 @@ declare module '$env/dynamic/private' {
 		XAUTHORITY: string;
 		_ZPLUG_OHMYZSH: string;
 		VSCODE_GIT_ASKPASS_NODE: string;
+		VIM_MODE_KEYMAP: string;
 		PERIOD: string;
 		VSCODE_INJECTION: string;
 		GTK2_RC_FILES: string;
@@ -233,6 +244,7 @@ declare module '$env/dynamic/private' {
 		SSH_ASKPASS: string;
 		LANG: string;
 		LC_PAPER: string;
+		WEZTERM_UNIX_SOCKET: string;
 		XDG_CURRENT_DESKTOP: string;
 		npm_package_version: string;
 		STARSHIP_SHELL: string;
@@ -247,6 +259,7 @@ declare module '$env/dynamic/private' {
 		KDE_SESSION_UID: string;
 		NIX_USER_PROFILE_DIR: string;
 		INFOPATH: string;
+		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 		XDG_SESSION_CLASS: string;
 		TERM: string;
 		LC_IDENTIFICATION: string;
@@ -283,6 +296,7 @@ declare module '$env/dynamic/private' {
 		TERMINFO_DIRS: string;
 		npm_execpath: string;
 		MOZ_PLUGIN_PATH: string;
+		WEZTERM_CONFIG_FILE: string;
 		XDG_RUNTIME_DIR: string;
 		npm_package_json: string;
 		LC_TIME: string;
@@ -306,8 +320,10 @@ declare module '$env/dynamic/private' {
 		QT_PLUGIN_PATH: string;
 		npm_node_execpath: string;
 		LC_NUMERIC: string;
+		WEZTERM_PANE: string;
 		OLDPWD: string;
 		TERM_PROGRAM: string;
+		WEZTERM_EXECUTABLE_DIR: string;
 		NODE_ENV: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;
