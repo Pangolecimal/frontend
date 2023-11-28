@@ -284,10 +284,11 @@
 			<div class="about">
 				<h2>About Us</h2>
 				<p>
-					Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos dolore repellat aperiam,
-					quibusdam commodi fugit nam dolor laboriosam natus possimus quia repudiandae iste eligendi
-					consectetur, distinctio perferendis non! Rem doloremque nobis accusamus sint a, molestias atque
-					itaque labore, illum mollitia maxime non. Laudantium quam recusandae vero delectus eum corporis non!
+					Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos dolore repellat
+					aperiam, quibusdam commodi fugit nam dolor laboriosam natus possimus quia repudiandae iste
+					eligendi consectetur, distinctio perferendis non! Rem doloremque nobis accusamus sint a,
+					molestias atque itaque labore, illum mollitia maxime non. Laudantium quam recusandae vero
+					delectus eum corporis non!
 				</p>
 				<div class="buttons">
 					<button class="link-button link-youtube">
@@ -541,15 +542,5 @@
 		padding: 3rem 1rem;
 		padding-bottom: 20rem;
 		position: relative;
-
-		& button {
-			border: none;
-			&:hover {
-				filter: brightness(125%);
-			}
-			&:active {
-				filter: brightness(75%);
-			}
-		}
 	}
 </style>
