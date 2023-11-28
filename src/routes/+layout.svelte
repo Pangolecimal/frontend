@@ -45,34 +45,10 @@
 			<div>Location:</div>
 			<div>{$page.url.pathname}</div>
 		</div>
-		<div class="spacer" />
 
-		<a href="/tasks" class="secondary" id="tasks">Tasks</a>
-		<a href="/about" class="secondary" id="about">About</a>
-
-		<div id="modal" data-active="false">
+		<div class="modal">
 			<a href="/tasks" class="secondary" id="tasks">Tasks</a>
 			<a href="/about" class="secondary" id="about">About</a>
-		</div>
-
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<div id="burger" on:click={send_help}>
-			<svg id="open" data-active="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-				><path
-					d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
-				/></svg
-			>
-			<svg
-				id="close"
-				data-active="false"
-				xmlns="http://www.w3.org/2000/svg"
-				height="1em"
-				viewBox="0 0 384 512"
-				><path
-					d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
-				/></svg
-			>
 		</div>
 	</nav>
 </header>
@@ -134,36 +110,43 @@
 		width: 100vw;
 	}
 
-	div#location {
+	#location {
 		display: grid;
 		place-items: center;
+		place-self: center;
 		grid-template-rows: 1fr 1fr;
 
 		width: fit-content;
-		font-size: 1.25rem;
-		font-weight: 900;
+		height: fit-content;
 		color: var(--ctp-mocha-blue);
-
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		translate: -50% -50%;
 	}
 
 	nav {
 		position: relative;
-		display: flex;
-		column-gap: 1rem;
+		display: grid;
+		grid-auto-flow: column;
+		grid-template-columns: 1fr 3fr 1fr;
+		height: fit-content;
+
+		gap: 1rem;
 		padding: 0.5rem 1rem;
 		background: var(--ctp-mocha-mantle);
-		justify-content: end;
-		font-size: 2rem;
+		/* justify-content: end; */
+		font-size: 1rem;
+		font-weight: 900;
 
 		& a {
 			text-decoration: none;
-			font-weight: 900;
 			display: grid;
 			place-items: center;
+		}
+
+		& > :nth-child(1) {
+			justify-self: start;
+		}
+		& > :nth-child(3) {
+			justify-self: end;
+			grid-area: 1/3;
 		}
 	}
 
@@ -184,106 +167,7 @@
 		}
 	}
 
-	div.spacer {
-		width: 100%;
-	}
-
-	a.secondary {
-		display: none;
-	}
-
-	#burger {
-		display: grid;
-		height: 2.5rem;
-		width: 2.5rem;
-		transition: rotate 500ms;
-	}
-
-	:is(#open, #close) {
-		position: absolute;
-		display: grid;
-		transition: 500ms;
-	}
-
-	:global(#open[data-active='true']) {
-		visibility: visible;
-		opacity: 100%;
-		z-index: 10;
-
-		rotate: 0;
-		scale: 1;
-	}
-	:global(#open[data-active='false']) {
-		visibility: hidden;
-		opacity: 0;
-		z-index: 5;
-
-		rotate: 180deg;
-		scale: 0;
-	}
-	:global(#close[data-active='true']) {
-		visibility: visible;
-		opacity: 100%;
-		z-index: 10;
-
-		rotate: 0;
-		scale: 1;
-	}
-	:global(#close[data-active='false']) {
-		visibility: hidden;
-		opacity: 0;
-		z-index: 5;
-
-		rotate: -180deg;
-		scale: 0;
-	}
-
-	#modal {
-		display: grid;
-		position: absolute;
-		top: 100%;
-		width: 10rem;
-		height: 12rem;
-		transition: 500ms;
-	}
-	:global(#modal[data-active='false']) {
-		visibility: hidden;
-		opacity: 0;
-	}
-	:global(#modal[data-active='true']) {
-		visibility: visible;
-		opacity: 100%;
-		transition: 500ms;
-
-		background-color: var(--ctp-mocha-base);
-		box-shadow: inset 0 0 1rem 1rem var(--ctp-mocha-surface0);
-
-		place-items: center;
-		gap: 2rem;
-		padding: 2rem;
-
-		border-radius: 0 0 1rem 1rem;
-	}
-	:global(#modal[data-active='true'] > a) {
-		display: grid;
-		place-items: center;
-
-		background: var(--ctp-mocha-base);
-		box-shadow: inset 0 0 0.5rem 0.5rem var(--ctp-mocha-surface0);
-
-		padding: 1rem;
-		border-radius: 1rem;
-	}
-
-	@media (min-width: 1000px) {
-		#burger {
-			display: none;
-			visibility: hidden;
-			opacity: 0;
-		}
-
-		a.secondary {
-			display: grid;
-		}
-	}
+	/* @media only screen and (orientation: portrait) {
+		-- ADD BUGRG
+	} */
 </style>

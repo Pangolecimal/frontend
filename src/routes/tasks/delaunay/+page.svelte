@@ -10,11 +10,13 @@
 	let [width, height] = [800, 800];
 	let aspectRatio = height / width;
 	let doLoop = 1;
-	const delta = 1 / 10;
+	let frame = 0;
+	const delta = 1 / 60;
 
 	//#region ALL THE MAGIC FUCKERY
 	const translated = { x: 0, y: 0 };
 	const PI = Math.PI;
+	const TAU = Math.PI * 2;
 	let RECT_MODE = 'DEFAULT'; // [DEFAULT, CORNERS, CORNER, CENTER, RADIUS]
 	let LINE_MODE = 'BUTT'; // [BUTT, ROUND, SQUARE]
 
@@ -256,7 +258,7 @@
 		static Indigo = 'hsla(240, 60%, 60%, 1)';
 		static Purple = 'hsla(270, 60%, 60%, 1)';
 		static Pink = 'hsla(300, 60%, 60%, 1)';
-		static RandomHue = () => `hsla(${random.int(360)}, 50%, 50%, 1)`;
+		static RandomHue = () => `hsla(${random.int(360)}, 60%, 60%, 1)`;
 		static RandomGray = () => `hsla(0, 0%, ${random.int(100)}%, 1)`;
 		static HueFrom = (/** @type {any} */ value) => `hsla(${value}, 50%, 50%, 1)`;
 		static GrayFrom = (/** @type {any} */ value) => `hsla(0, 0%, ${value}%, 1)`;
@@ -293,13 +295,11 @@
 	}
 	/**
 	 * @param {number} value
-	 * @param {number} min
-	 * @param {number} max
+	 * @param {number} v_min
+	 * @param {number} v_max
 	 */
-	function clamp(value, min, max) {
-		if (value < min) return min;
-		if (value > max) return max;
-		return value;
+	function clamp(value, v_min, v_max) {
+		return max(min(value, v_max), v_min);
 	}
 	/**
 	 * @param {number} a
@@ -479,8 +479,12 @@
 		boolean: function () {
 			return Math.random() < 0.5;
 		},
-		sign: function () {
-			return Math.round(Math.random()) * 2 - 1;
+		sign: function (a = 1) {
+			if (typeof a !== 'number') {
+				console.error('random.sign function error: ', arguments);
+				return NaN;
+			}
+			return (Math.random() * 2 - 1) * a;
 		},
 		/** @returns {any} */
 		array: function (/** @type {Array<any>} */ a) {
@@ -662,9 +666,55 @@
 	}
 
 	class Point {
+		static POINT_ID = 0;
+		static MIN_SPEED = 0.5;
+		static MAX_SPEED = 2;
+		static MIN_ACC = -0.1;
+		static MAX_ACC = 0.1;
+
 		constructor(x = 0, y = 0) {
 			this.x = x;
 			this.y = y;
+
+			this.a = random.sign(PI);
+			this.dx = round(cos(this.a));
+			this.dy = round(sin(this.a));
+
+			this.s = random.float(Point.MIN_SPEED, Point.MAX_SPEED);
+			this.ds = random.float(0.01);
+
+			this.hue = map(this.s, 0.5, 2, 0, 120);
+			this.color = `hsla(${this.hue}, 60%, 60%)`;
+			this.id = Point.POINT_ID++;
+		}
+
+		render() {
+			stroke(Color.Black);
+			strokeWidth(0.5);
+			fill(this.color);
+			point(this.x, this.y, map(this.s, Point.MIN_SPEED, Point.MAX_SPEED, 3, 2) ** 2);
+		}
+
+		update() {
+			this.x = round(this.x + this.dx * this.s, 3);
+			this.y = round(this.y + this.dy * this.s, 3);
+
+			this.s = clamp(this.s + this.ds, Point.MIN_SPEED, Point.MAX_SPEED);
+			this.ds = clamp(this.ds + random.sign(Point.MIN_ACC / 10), Point.MIN_ACC, Point.MAX_ACC);
+
+			this.hue = map(this.s, Point.MIN_SPEED, Point.MAX_SPEED, 120, 0);
+			this.color = `hsla(${this.hue}, 60%, 60%)`;
+
+			this.a = clamp(this.a + random.sign(PI) * 0.01, -PI, PI);
+			this.dx = cos(this.a);
+			this.dy = sin(this.a);
+
+			if (this.x < -width / 2 + 4 || this.x > width / 2 - 4) {
+				this.x = -this.x + 4 * sign(this.x);
+			}
+			if (this.y < -height / 2 + 4 || this.y > height / 2 - 4) {
+				this.y = -this.y + 4 * sign(this.y);
+			}
 		}
 
 		/**
@@ -740,6 +790,15 @@
 		}
 
 		/**
+		 * @param n {number} - scaling factor
+		 * @returns {Point}
+		 */
+		scale(n) {
+			const len = Math.sqrt(this.x * this.x + this.y * this.y) / n;
+			return new Point(this.x / len, this.y / len);
+		}
+
+		/**
 		 * @param p {Point}
 		 * @returns {boolean}
 		 */
@@ -787,16 +846,21 @@
 		}
 
 		render() {
-			fill();
-			stroke(TW.gray[300]);
-			strokeWidth(width * 0.001);
-			line(this.p0.x, this.p0.y, this.p1.x, this.p1.y);
-			line(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
-			line(this.p2.x, this.p2.y, this.p0.x, this.p0.y);
-			// stroke(TW.gray[900]);
-			// point(this.p0.x, this.p0.y, 4);
-			// point(this.p1.x, this.p1.y, 4);
-			// point(this.p2.x, this.p2.y, 4);
+			strokeWidth(width * 0.0025);
+			let [p0, p1, p2] = [this.p0, this.p1, this.p2];
+			let [q01, q12, q20] = [p1.add(p0).mult(0.5), p2.add(p1).mult(0.5), p0.add(p2).mult(0.5)];
+
+			stroke(p0.color);
+			line(p0.x, p0.y, q01.x, q01.y);
+			line(p0.x, p0.y, q20.x, q20.y);
+
+			stroke(p1.color);
+			line(p1.x, p1.y, q12.x, q12.y);
+			line(p1.x, p1.y, q01.x, q01.y);
+
+			stroke(p2.color);
+			line(p2.x, p2.y, q20.x, q20.y);
+			line(p2.x, p2.y, q12.x, q12.y);
 		}
 
 		/**
@@ -863,49 +927,54 @@
 	});
 
 	/** @type {Point[]} */
-	const points = [];
+	let points = [];
 	/** @type {Triangle[]} */
 	let triangles = [];
 
 	const sup = new Triangle(
-		new Point(0, height),
-		new Point(-width, -height / 2),
-		new Point(width, -height / 2)
+		new Point(0, height * 2),
+		new Point(-width * 2, -height),
+		new Point(width * 2, -height)
 	);
 
-	function update() {}
+	function update() {
+		for (let i = 0; i < points.length; i++) {
+			points[i].update();
+		}
+		points = points;
+
+		triangulate();
+	}
 
 	function render() {
 		background(TW.gray[700]);
 
-		stroke(TW.gray[900]);
-		strokeWidth(width * 0.0025);
-		for (let i = 0; i < points.length; i++) {
-			fill(`hsla(${(10 * i) % 360}, 60%, 60%)`);
-			point(points[i].x, points[i].y, width * 0.005);
-		}
-
 		for (let i = 0; i < triangles.length; i++) {
 			triangles[i].render();
 		}
-
-		// sup.render();
+		for (let i = 0; i < points.length; i++) {
+			points[i].render();
+		}
 	}
 
 	function loop() {
 		update();
 		render();
+		frame++;
 		(doLoop && setTimeout(loop, delta * 1000)) ||
 			console.log('%c	loop ended', 'font-size: 1rem; color: lightgreen');
 	}
 
-	/** @param n {number} */
 	function create_random_point() {
 		let [x, y] = [
-			random.float(width * 0.45) * random.sign(),
-			random.float(height * 0.45) * random.sign()
+			random.int(width * 0.45) * random.sign(),
+			random.int(height * 0.45) * random.sign()
 		];
-		points.push(new Point(x, y));
+		points = [...points, new Point(x, y)];
+	}
+	function delete_last_point() {
+		points.pop();
+		points = points;
 	}
 
 	function triangulate() {
@@ -995,80 +1064,206 @@
 	<canvas id="cnv" width="800" height="800" bind:this={cnv} />
 	<div id="menu">
 		<div id="point-make">
-			<button class="btn" id="btn-random" on:click={() => create_random_point()}
-				>Add Random Point</button
+			<button class="btn" id="btn-create" on:click={create_random_point}>Add A Random Point</button>
+			<button class="btn" id="btn-remove" on:click={delete_last_point}>Remove The Last Point</button
 			>
 			<button class="btn" id="btn-triangulate" on:click={triangulate}>Triangulate Points</button>
 			<button
 				class="btn"
-				id="btn-random-triangulate"
+				id="btn-create-triangulate"
 				on:click={() => {
 					create_random_point();
 					triangulate();
-				}}>Add Random Point And <br /> Triangulate Points</button
+				}}>Add A Random Point <br /> & Triangulate Points</button
 			>
 			<!-- <button class="btn" id="btn-custom" on:click={create_random_point}>Add A Point At</button> -->
+		</div>
+		<h3>Points</h3>
+		<div id="point-list">
+			{#each points as p, i}
+				<div class="pid" id="pid-{p.id}">
+					<label style="--accent:{p.color}">
+						X<sub>{i}</sub>:
+						<input
+							type="number"
+							min={-width / 2}
+							max={width / 2}
+							step="0.1"
+							readonly
+							id={p.id.toString()}
+							bind:value={p.x}
+						/>
+						<input
+							type="range"
+							min={-width / 2}
+							max={width / 2}
+							step="0.1"
+							readonly
+							id={p.id.toString()}
+							bind:value={p.x}
+						/>
+					</label>
+					<label for="Y-{p.id}" style="--accent:{p.color}">
+						Y<sub>{i}</sub>:
+						<input
+							type="number"
+							min={-height / 2}
+							max={height / 2}
+							step="0.1"
+							readonly
+							id={p.id.toString()}
+							bind:value={p.y}
+						/>
+						<input
+							type="range"
+							min={-height / 2}
+							max={height / 2}
+							step="0.1"
+							readonly
+							id={p.id.toString()}
+							bind:value={p.y}
+						/>
+					</label>
+				</div>
+				<br />
+			{/each}
 		</div>
 	</div>
 </main>
 
 <style>
 	main {
-		padding: 1rem;
-		height: 100%;
 		width: 100%;
+		height: 100%;
+		padding: 1rem;
 		display: grid;
 		place-items: center;
 		grid-auto-flow: column;
-		grid-template-columns: 1fr 1fr;
 
 		& > #cnv {
-			justify-self: start;
-			width: min(800px, 100%);
+			justify-self: center;
+			width: clamp(400px, 100%, 800px);
+			padding: 2rem;
 		}
 
 		& > #menu {
-			padding: 1rem;
-			width: 100%;
-			height: 100%;
-			justify-self: end;
 			display: grid;
 			justify-content: center;
+			align-items: start;
+			grid-template-rows: 1fr 0 3fr;
+			overflow-y: hidden;
+
+			padding: 1rem;
+			height: 100%;
+			gap: 2rem;
+			border-radius: 1rem;
+			background: var(--ctp-mocha-mantle);
 
 			& > #point-make {
 				width: 100%;
 				height: fit-content;
 				display: grid;
-				place-items: center;
 				gap: 1rem;
 
 				& > .btn {
 					--_pri: var(--pri, var(--ctp-mocha-text));
 					--_sec: var(--sec, var(--ctp-mocha-overlay2));
 					padding: 0.25rem 1rem;
-					border: none;
 					border-radius: 1rem;
-					font-size: 1.5rem;
+					font-size: inherit;
 					font-weight: bold;
 					color: var(--ctp-mocha-base);
 					background: var(--_pri);
 					box-shadow: 0 0 0.2rem 0.1rem var(--_sec);
-					width: fit-content;
+					width: 100%;
 				}
 
-				& > #btn-random {
+				& > #btn-create {
 					--pri: var(--ctp-mocha-green);
 					--sec: var(--ctp-mocha-teal);
+				}
+				& > #btn-remove {
+					--pri: var(--ctp-mocha-red);
+					--sec: var(--ctp-mocha-mauve);
 				}
 				& > #btn-triangulate {
 					--pri: var(--ctp-mocha-sky);
 					--sec: var(--ctp-mocha-blue);
 				}
-				& > #btn-random-triangulate {
-					--pri: var(--ctp-mocha-red);
-					--sec: var(--ctp-mocha-mauve);
+				& > #btn-create-triangulate {
+					--pri: var(--ctp-mocha-teal);
+					--sec: var(--ctp-mocha-sky);
 				}
 			}
+
+			& > #point-list {
+				width: 100%;
+				height: 100%;
+				padding: 2rem;
+				background: var(--ctp-mocha-crust);
+				border-radius: 0.25rem;
+				gap: 1rem;
+
+				overflow-y: scroll;
+				overflow-x: hidden;
+				&::-webkit-scrollbar {
+					width: 0.5rem;
+				}
+				&::-webkit-scrollbar-track {
+					background: transparent;
+				}
+				&::-webkit-scrollbar-thumb {
+					background: var(--ctp-mocha-text);
+					border-radius: 100vw;
+				}
+				&::-webkit-scrollbar-thumb:hover {
+					background: #555;
+				}
+
+				& > div.pid {
+					display: grid;
+				}
+
+				& label {
+					color: var(--accent);
+				}
+
+				& input[type='number'] {
+					color: var(--ctp-mocha-text);
+					background: var(--ctp-mocha-mantle);
+					border: none;
+					font-size: 1rem;
+					padding-right: 1ch;
+					border-radius: 0.5rem;
+					width: 5ch;
+					text-align: start;
+				}
+
+				/* & input[type='range'] {
+					accent-color: var(--accent);
+				} */
+			}
+		}
+	}
+
+	:global(input::-webkit-outer-spin-button, input::-webkit-inner-spin-button) {
+		appearance: none;
+		margin: 0;
+	}
+
+	@media only screen and (orientation: portrait) {
+		main {
+			grid-auto-flow: row;
+		}
+
+		main > #cnv {
+			width: clamp(400px, 100%, 600px);
+		}
+
+		main > #menu {
+			overflow-y: scroll;
+			font-size: 1rem;
+			width: 100%;
 		}
 	}
 </style>
